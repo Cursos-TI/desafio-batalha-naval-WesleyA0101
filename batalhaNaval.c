@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <locale.h>
 
-// Nivel aventureiro
+// Nivel mestre
 
 #define TAMANHO 10
 #define NAVIO_TAMANHO 3
 #define NAVIOS 4
+#define HABILIDADE_TAMANHO 5
 
 void inicializartabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
     for(int i = 0; i < TAMANHO; i++){
@@ -43,6 +44,31 @@ void posicionarnavio(int tabuleiro[TAMANHO][TAMANHO], int linha, int coluna, int
         tabuleiro[linha + (i * direcaolinha)][coluna + (i * direcaocoluna)] = 3;
     
     }
+}
+
+void aplicarhabilidade(int tabuleiro[TAMANHO][TAMANHO], int habilidade[HABILIDADE_TAMANHO][HABILIDADE_TAMANHO], int linha, int coluna){
+    int centro = HABILIDADE_TAMANHO / 2;
+    for(int i = 0; i < HABILIDADE_TAMANHO; i++){
+        for(int j = 0; j < HABILIDADE_TAMANHO; j++){
+	    int novalinha = linha + (i - centro);
+	    int novacoluna = coluna + (j - centro);
+	    if(novalinha >= 0 && novalinha < TAMANHO && novacoluna >= 0 && novacoluna < TAMANHO){
+	        if(habilidade[i][j] == 1){
+		    tabuleiro[novalinha][novacoluna] = 5;
+		
+		}
+	     
+	    }
+	
+	
+	
+	}
+    
+    }
+
+
+
+
 }
 
 void exibirtabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
@@ -84,6 +110,38 @@ int main() {
 	}
     
     }
+
+    //Habilidades
+    int cone[HABILIDADE_TAMANHO][HABILIDADE_TAMANHO] = {
+        {0, 0, 1, 0, 0},
+	{0, 1, 1, 1, 0},
+	{1, 1, 1, 1, 1},
+	{0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0}
+    
+    };
+
+    int cruz[HABILIDADE_TAMANHO][HABILIDADE_TAMANHO] = {
+        {0, 0, 1, 0, 0},
+	{0, 0, 1, 0, 0},
+	{1, 1, 1, 1, 1},
+	{0, 0, 1, 0, 0},
+	{0, 0, 0, 0, 0}
+
+    };
+
+    int octaedro[HABILIDADE_TAMANHO][HABILIDADE_TAMANHO] = {
+       {0, 0, 1, 0, 0},
+       {0, 1, 1, 1, 0},
+       {1, 1, 1, 1, 1}, 
+       {0, 1, 1, 1, 0},
+       {0, 0, 1, 0, 0}
+    
+    };
+
+    aplicarhabilidade(tabuleiro, cone, 4, 4);
+    aplicarhabilidade(tabuleiro, cruz, 6, 6);
+    aplicarhabilidade(tabuleiro, octaedro, 2, 2);
 
     exibirtabuleiro(tabuleiro);
 
